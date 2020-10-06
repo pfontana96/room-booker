@@ -1,12 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="column"> 
-  <h1 class="title">
-    Bienvenido, {{name}}!
-  </h1>
 
-  <div class="modal" id="modal" >
+<div class="title is-1">Salas disponibles:</div>
+<hr>
+<div class="columns" id="room_list">
+{% for room in rooms %}
+    <div class="column is-one-quarter">
+        <div class="box has-text-centered" style="background-color: darkslategray; margin-left: 5px;">
+            <div class="column">
+                <h1 class="title is-3">{{room.name}}</h1>
+                <h2 class="subtitle is-5">Capacidad de {{room.capacity}} personas</h2>
+            </div>
+            <br>
+            <button class="button booker is-success is-centered" id={{room.id}}>Reservar sala</button>
+        </div>
+    </div>
+    <br>
+{% endfor %}
+</div>
+
+<div class="modal" id="modal" >
     <div class="modal-background"></div>
     <div class="modal-content">
       <form method="POST" action="/book" class="form-container">
@@ -34,46 +48,27 @@
   </div>
 
   <p>
-    <a class = "button is-success modal-button" data-target = "#modal">Realizar nueva reserva</a>
+    <a class = "button is-danger is-primary modal-button" data-target = "#modal">Modificar fecha y hora</a>
   </p>
-  <hr>
-  <div>
-    <h2 class="subtitle is-4">Mis reservas:</h2>
-  </div>
-  <br>
-  <div class="columns">
-    {% for booking in bookings %}
-    <div class="column is-one-sixth">
-      <div class="box" style="background-color: darkslategray; margin-left: 5px;">
-        <h1 class="title is-5">{{booking.name}}</h1>
-        <h2 class="subtitle is-5">{{booking.date_time}}</h2>
-        <div class="field has-text-centered">
-          <button class="button cancel-button is-danger" id="{{booking.name}} {{booking.date_time}}">Cancelar</button>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
 
-<script>
-  $(".modal-button").click(function() {
-     var target = $(this).data("target");
-    //  $("html").addClass("is-clipped");
-     $(".modal").addClass("is-active");
-  });
-  
-  $("#closeBtn").click(function() {
-    $(".modal").removeClass("is-active");
-  });
+  <script>
+    $(".modal-button").click(function() {
+       var target = $(this).data("target");
+      //  $("html").addClass("is-clipped");
+       $(".modal").addClass("is-active");
+    });
+    
+    $("#closeBtn").click(function() {
+      $(".modal").removeClass("is-active");
+    });
 
-  $(".cancel-button").click(function() {
-    console.log(this.id);
-    var id = this.id;
-    var form_data = new FormData();
-    form_data.append("id", id);
+    $(".booker").click(function(){
+        var room_id = this.id;
+        var form_data = new FormData();
+        form_data.append("room_id", room_id);
+        form_data.append("date_time", "{{date_time}}");
 
-    fetch('/cancel', {
+        fetch('/reserve', {
             method : 'POST',
             body: form_data 
         }).then(res => res.json())
@@ -83,7 +78,8 @@
             } else {
                 alert("Server response error")
             }
-    }).catch(err => console.log(err));
-  });
-</script>
+        }).catch(err => console.log(err));
+    });
+ </script>
+
 {% endblock %}

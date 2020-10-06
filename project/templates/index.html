@@ -1,10 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Flask Login Example
-</h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+<div class="columns">
+  <div class="column">
+    <h1 class="title">
+      InterBrain Room Booker
+    </h1>
+    <h2 class="subtitle">
+      Otra forma de organizar reuniones.
+    </h2>
+  </div>
+  <div class="column">
+    <div class="box has-text-centered" style="background-color: darkslategray; color: white;">
+      <form action="/signup" method="GET">
+        <h2>Descubri otra forma de reservar salas</h2>
+        <button class="button is-block is-success is-large is-rounded is-fullwidth" name="signup">Registrarse</button>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
