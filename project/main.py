@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, flash
 from flask_login import login_required, current_user
-from .models import db, Room, Reservation
 
 import sys
 from datetime import datetime
+
+from project.models import db, Room, Reservation
 
 main = Blueprint('main', __name__)
 
@@ -25,6 +26,11 @@ def book():
     date = list(map(int, request.form.get('date').split('-'))) # [year, month, day]
     hour = list(map(int, request.form.get('hour').split(':'))) # [hour, minutes]
     date_time = datetime(year = date[0], month = date[1], day = date[2], hour = hour[0])
+
+    today = datetime.now()
+    if (date_time < today): # Caso de reserva en el pasado
+        flash('Fecha de reserva pasada.')
+        return redirect(url_for('main.profile'))
 
     subquery = db.session.query(Room.id).join(Reservation).filter(Reservation.date_time == date_time).all()
     results = [r for (r,) in subquery]

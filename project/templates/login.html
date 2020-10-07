@@ -3,7 +3,7 @@
 {% block content %}
 <div class="column is-4 is-offset-4">
     <h3 class="title">Login</h3>
-    <div class="box">
+    <div class="box" style="background-color: darkslategray;">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="notification is-danger">
@@ -30,12 +30,12 @@
                 </div>
             </div>
             <div class="field">
-                <label class="checkbox is-rounded">
+                <label class="checkbox is-rounded" style="color: white;">
                     <input type="checkbox">
                     Remember me
                 </label>
             </div>
-            <button class="button is-block is-info is-large is-fullwidth is-rounded">Login</button>
+            <button class="button is-block is-success is-large is-fullwidth is-rounded">Login</button>
         </form>
     </div>
 </div>

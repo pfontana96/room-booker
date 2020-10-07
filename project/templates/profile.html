@@ -32,7 +32,14 @@
       </form>
     </div>
   </div>
-
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+      <div class="notification is-danger is-small">
+          <button class="delete"></button>
+          {{ messages[0] }}.
+      </div>
+  {% endif %}
+  {% endwith %}
   <p>
     <a class = "button is-success modal-button" data-target = "#modal">Realizar nueva reserva</a>
   </p>
@@ -41,12 +48,12 @@
     <h2 class="subtitle is-4">Mis reservas:</h2>
   </div>
   <br>
-  <div class="columns">
+  <div class="columns is-multiline is-mobile">
     {% for booking in bookings %}
-    <div class="column is-one-sixth">
+    <div class="column  is-one-fifth ">
       <div class="box" style="background-color: darkslategray; margin-left: 5px;">
-        <h1 class="title is-5">{{booking.name}}</h1>
-        <h2 class="subtitle is-5">{{booking.date_time}}</h2>
+        <h1 class="title is-4 has-text-centered">{{booking.name}}</h1>
+        <h2 class="subtitle is-5 has-text-centered">{{booking.date_time}}</h2>
         <div class="field has-text-centered">
           <button class="button cancel-button is-danger" id="{{booking.name}} {{booking.date_time}}">Cancelar</button>
         </div>
@@ -79,11 +86,15 @@
         }).then(res => res.json())
         .then(data => {
             if(data.success) {
-                window.location.replace('/profile')
+                window.location.reload()
             } else {
                 alert("Server response error")
             }
     }).catch(err => console.log(err));
+  });
+
+  $(".delete").click(function (){
+    $(this).parent().addClass('is-hidden').remove();
   });
 </script>
 {% endblock %}

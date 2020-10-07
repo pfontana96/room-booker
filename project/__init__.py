@@ -1,15 +1,17 @@
 from flask import Flask
 from flask_login import LoginManager
+from pathlib import Path
 
-from .auth import auth as auth_blueprint
-from .main import main as main_blueprint
-from .models import db, User, create_rooms
+from project.auth import auth as auth_blueprint
+from project.main import main as main_blueprint
+from project.models import db, User
 
 def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'secret-key-goes-here'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    rep_path = Path(__file__).resolve().parent.parent # directorio room-booker
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + str(rep_path.joinpath('data/db.sqlite'))
 
     db.init_app(app)
 

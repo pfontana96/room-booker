@@ -1,0 +1,24 @@
+{
+    "rooms" : [
+        {
+            "id"       : 1,
+            "name"     : "Malbec",
+            "capacity" : 12
+        },
+        {
+            "id"       : 2,
+            "name"     : "Syrah",
+            "capacity" : 8
+        },
+        {
+            "id"       : 3,
+            "name"     : "Cabernet",
+            "capacity" : 16
+        },
+        {
+            "id"       : 4,
+            "name"     : "Chardonnay",
+            "capacity" : 24
+        }
+    ]
+}

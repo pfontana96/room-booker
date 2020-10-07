@@ -29,14 +29,3 @@ class Room(db.Model):
     capacity = db.Column(db.Integer)
 
     users = db.relationship('Reservation', back_populates='room')
-
-def create_rooms():
-    names = ['Syrah', 'Malbec', 'Cabernet', 'Franc']
-    caps = [8, 6, 8, 24]
-    rooms = []
-
-    for name, cap in zip(names, caps):
-        rooms.append(Room(name=name, capacity=cap))
-    
-    db.session.add_all(rooms)
-    db.session.commit()
