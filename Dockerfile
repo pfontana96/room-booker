@@ -5,11 +5,14 @@ WORKDIR /room-booker
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
-RUN python -m venv .venv
 COPY requirements.txt requirements.txt
-RUN .venv/bin/pip install -r requirements.txt
+
+RUN pip install -r requirements.txt
+
 COPY . .
-RUN chmod a+x boot.sh
+
+RUN chmod a+x run.sh
+
 EXPOSE 5000
 
 ENTRYPOINT  ["./run.sh"]
